@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <title>Local Music Party — мобильное приложение</title>
+  <!-- Bootstrap 5 (модульная сетка) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Inter Apple-like -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ===== */
+    :root {
+      --bg-gradient: radial-gradient(circle at 30% 20%, #120b1e, #07070a 90%);
+      --surface: rgba(22, 22, 28, 0.75);
+      --surface-hover: rgba(32, 32, 38, 0.9);
+      --text-primary: #ffffff;
+      --text-secondary: #c0c0cc;
+      --accent-purple: #a78bfa;
+      --accent-coral: #ff8a7a;
+      --border-subtle: rgba(160, 160, 180, 0.15);
+      --border-radius: 8px;
+      --container-padding: 24px;
+      --spacing-section: 100px;
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --container-padding: 20px;
+        --spacing-section: 70px;
+      }
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 400;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.01em;
+    }
+
+    /* ===== МОДУЛЬНАЯ СЕТКА 1360px ===== */
+    .container-custom {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding-left: var(--container-padding);
+      padding-right: var(--container-padding);
+      width: 100%;
+    }
+
+    /* ===== ОТСТУПЫ СЕКЦИЙ ===== */
+    .section {
+      margin-top: var(--spacing-section);
+    }
+
+    /* ===== ЛОГОТИП ===== */
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(145deg, var(--accent-purple), var(--accent-coral));
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 22px;
+      font-weight: 600;
+    }
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: white;
+    }
+    @media (max-width: 480px) {
+      .logo-text {
+        font-size: 18px;
+      }
+      .logo-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+      }
+    }
+
+    /* ===== СОЦСЕТИ — БОЛЬШИЕ ===== */
+    .social-link {
+      color: #b0b0c0;
+      margin: 0 10px;
+      font-size: 1.9rem;
+      transition: all 0.2s ease;
+      display: inline-block;
+    }
+    .social-link:hover {
+      color: var(--accent-coral);
+      transform: translateY(-3px);
+    }
+    @media (max-width: 768px) {
+      .social-link {
+        font-size: 1.7rem;
+        margin: 0 8px;
+      }
+    }
+
+    /* ===== КНОПКИ ===== */
+    .btn-download {
+      background: rgba(30, 30, 40, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      color: white;
+      padding: 12px 28px;
+      border-radius: var(--border-radius);
+      font-weight: 500;
+      font-size: 15px;
+      transition: all 0.25s;
+    }
+    .btn-download:hover {
+      background: rgba(167, 139, 250, 0.15);
+      border-color: var(--accent-purple);
+    }
+    .btn-solid {
+      background: linear-gradient(145deg, #8b5cf6, #6d28d9);
+      border: none;
+      color: white;
+      padding: 14px 40px;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+    .btn-solid:hover {
+      background: linear-gradient(145deg, #9f7aea, #7c3aed);
+      transform: scale(0.98);
+    }
+    @media (max-width: 768px) {
+      .btn-download, .btn-solid {
+        padding: 12px 24px;
+        font-size: 15px;
+      }
+    }
+
+    /* ===== ТИПОГРАФИКА — АДАПТИВ ===== */
+    .display-headline {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: white;
+      margin-bottom: 32px;
+    }
+    .section-title {
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 28px;
+    }
+    .body-large {
+      font-size: 22px;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 992px) {
+      .display-headline {
+        font-size: 48px;
+      }
+      .section-title {
+        font-size: 34px;
+      }
+    }
+    @media (max-width: 768px) {
+      .display-headline {
+        font-size: 38px;
+        margin-bottom: 24px;
+      }
+      .section-title {
+        font-size: 30px;
+        margin-bottom: 20px;
+      }
+    }
+    @media (max-width: 480px) {
+      .display-headline {
+        font-size: 32px;
+      }
+      .section-title {
+        font-size: 28px;
+      }
+    }
+
+    /* ===== СОВРЕМЕННЫЙ СПИСОК С / ===== */
+    .modern-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .modern-list li {
+      font-size: 20px;
+      color: white;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      font-weight: 450;
+    }
+    .modern-list li::before {
+      content: "/";
+      color: var(--accent-coral);
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 1;
+    }
+    @media (max-width: 768px) {
+      .modern-list li {
+        font-size: 18px;
+        margin-bottom: 16px;
+      }
+    }
+
+    /* ===== СЕТКА ПРЕИМУЩЕСТВ ===== */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px 80px;
+      margin-top: 40px;
+    }
+    @media (max-width: 768px) {
+      .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+    }
+    .feature-card {
+      background: rgba(18, 18, 24, 0.3);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 24px;
+    }
+
+    /* ===== МОКАП — ПОЛНОСТЬЮ АДАПТИВ ===== */
+    .mockup-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    .mockup-phone {
+      max-width: 260px;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+      transition: transform 0.3s;
+    }
+    .mockup-phone:hover {
+      transform: translateY(-5px);
+    }
+    @media (max-width: 768px) {
+      .mockup-phone {
+        max-width: 220px;
+        margin: 20px 0;
+      }
+    }
+
+    /* ===== РАСКРЫВАЮЩИЙСЯ FAQ ===== */
+    .faq-item {
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 28px 0;
+    }
+    .faq-question {
+      font-weight: 600;
+      font-size: 20px;
+      margin-bottom: 0;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+    }
+    .faq-question i {
+      color: var(--accent-coral);
+      font-size: 18px;
+      transition: transform 0.3s;
+    }
+    .faq-answer {
+      color: var(--text-secondary);
+      font-size: 17px;
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, margin-top 0.3s;
+    }
+    .faq-answer.show {
+      max-height: 300px;
+      margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+      .faq-question {
+        font-size: 18px;
+      }
+    }
+
+    /* ===== ФОРМА ПО ЦЕНТРУ ===== */
+    .form-control-clean {
+      background: rgba(22, 22, 28, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--border-radius);
+      padding: 18px 24px;
+      color: white;
+      font-size: 16px;
+      width: 100%;
+    }
+    .form-control-clean:focus {
+      background: rgba(32, 32, 38, 0.9);
+      border-color: var(--accent-purple);
+      outline: none;
+    }
+
+    /* ===== ФУТЕР — СОВРЕМЕННЫЙ ===== */
+    .footer-modern {
+      border-top: 1px solid rgba(167, 139, 250, 0.15);
+      padding: 70px 0 50px;
+      margin-top: 120px;
+      background: rgba(7, 7, 10, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    @media (max-width: 768px) {
+      .footer-modern {
+        padding: 50px 0 30px;
+        margin-top: 80px;
+      }
+    }
+
+    /* ===== УТИЛИТЫ ===== */
+    .no-shadow {
+      box-shadow: none !important;
+    }
+    a {
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    /* ===== МОБИЛЬНАЯ НАВИГАЦИЯ ===== */
+    @media (max-width: 992px) {
+      .navbar .d-flex {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+      }
+    }
+    @media (max-width: 576px) {
+      .navbar .d-flex {
+        margin-top: 15px;
+        justify-content: flex-start;
+        width: 100%;
+      }
+      .navbar-brand {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ШАПКА — ПОЛНОСТЬЮ АДАПТИВ -->
+  <div class="container-custom">
+    <nav class="navbar navbar-expand-lg px-0 py-4">
+      <div class="container-fluid p-0 flex-wrap">
+        <a class="navbar-brand p-0" href="#">
+          <div class="logo">
+            <div class="logo-icon">♫</div>
+            <div class="logo-text">LOCAL MUSIC PARTY</div>
+          </div>
+        </a>
+        <div class="d-flex align-items-center ms-auto ms-lg-0 flex-wrap">
+          <div class="d-flex order-2 order-lg-1 mt-3 mt-lg-0">
+            <a href="#" class="social-link"><i class="fab fa-telegram-plane"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-vk"></i></a>
+            <a href="#" class="social-link me-3"><i class="fab fa-tiktok"></i></a>
+          </div>
+          <a href="#" class="btn-download order-1 order-lg-2 me-0 me-lg-0">Скачать</a>
+        </div>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ХЕРО — МОБИЛЬНАЯ ПЕРЕСТРОЙКА -->
+  <div class="container-custom section">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6" data-aos="fade-right" data-aos-duration="700">
+        <h1 class="display-headline">Мобильное приложение для поиска локальных мероприятий</h1>
+        <div class="d-flex flex-wrap align-items-center gap-3">
+          <a href="#" class="btn-solid">Скачать приложение</a>
+          <span class="feature-text" style="color: var(--text-secondary);">App Store · Google Play</span>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left" data-aos-duration="700">
+        <div class="mockup-wrapper">
+          <img src="https://grizly.club/uploads/posts/2023-08/1691415056_grizly-club-p-kartinki-mokap-telefon-bez-fona-9.png" alt="Mockup iPhone" class="mockup-phone" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ЧТО ВНУТРИ? -->
+  <div class="container-custom section">
+    <h2 class="section-title" data-aos="fade-up">Что внутри?</h2>
+    <div class="feature-grid">
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="50">
+        <h4 style="font-size: 22px; font-weight: 600; margin-bottom: 16px;">Афиша музыкальных мероприятий</h4>
+        <p style="color: var(--text-secondary); font-size: 17px;">Большая подборка концертов, в том числе локальных артистов</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+        <h4 style="font-size: 22px; font-weight: 600; margin-bottom: 16px;">Зарубежные анонсы</h4>
+        <p style="color: var(--text-secondary); font-size: 17px;">Концерты артистов, которые редко приезжают в Россию</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="150">
+        <h4 style="font-size: 22px; font-weight: 600; margin-bottom: 16px;">Удобный поиск</h4>
+        <p style="color: var(--text-secondary); font-size: 17px;">По городам, жанрам, площадкам, исполнителям</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+        <h4 style="font-size: 22px; font-weight: 600; margin-bottom: 16px;">Карта мероприятий</h4>
+        <p style="color: var(--text-secondary); font-size: 17px;">Находи ближайшие события на интерактивной карте</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- БЛОК +10% -->
+  <div class="container-custom section">
+    <div class="row align-items-center">
+      <div class="col-md-6 order-md-2" data-aos="fade-left">
+        <div class="mockup-wrapper">
+          <img src="https://grizly.club/uploads/posts/2023-08/1691415056_grizly-club-p-kartinki-mokap-telefon-bez-fona-9.png" alt="Mockup" class="mockup-phone" loading="lazy">
+        </div>
+      </div>
+      <div class="col-md-6 order-md-1" data-aos="fade-right">
+        <div style="border-left: 6px solid var(--accent-coral); padding-left: 32px;">
+          <h3 style="font-size: clamp(28px, 5vw, 38px); font-weight: 700; line-height: 1.1; margin-bottom: 24px;">Зарабатывайте на посещениях ресторанов и заказе доставки.</h3>
+          <p style="font-size: clamp(24px, 4vw, 28px); font-weight: 600; color: var(--accent-purple); margin-bottom: 16px;">+10% от каждого заказа на ваш счёт!</p>
+          <p style="color: var(--text-secondary); font-size: 19px;">Пассивный доход с каждого билета и брони.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ДЛЯ ОРГАНИЗАТОРА -->
+  <div class="container-custom section">
+    <div class="row align-items-center">
+      <div class="col-md-6" data-aos="fade-right">
+        <div class="mockup-wrapper">
+          <img src="https://grizly.club/uploads/posts/2023-08/1691415056_grizly-club-p-kartinki-mokap-telefon-bez-fona-9.png" alt="Mockup" class="mockup-phone" loading="lazy">
+        </div>
+      </div>
+      <div class="col-md-6" data-aos="fade-left">
+        <h2 class="section-title" style="margin-bottom: 24px;">Для организатора</h2>
+        <p style="font-size: 24px; font-weight: 600; color: white; margin-bottom: 24px;">Ты сам предлагаешь мероприятие через наш сайт</p>
+        <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 32px;">После проверки модератором анонс появится в приложении. Стоимость размещения — <span style="color: white; font-weight: 600;">бесплатна</span>.</p>
+        <a href="#" class="btn-solid" style="background: linear-gradient(145deg, #ff7e5f, #ff6b5c);">Добавить мероприятие</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ДЛЯ ПОЛЬЗОВАТЕЛЯ — список с / -->
+  <div class="container-custom section">
+    <div class="row align-items-center">
+      <div class="col-md-6 order-md-2" data-aos="fade-left">
+        <div class="mockup-wrapper">
+          <img src="https://grizly.club/uploads/posts/2023-08/1691415056_grizly-club-p-kartinki-mokap-telefon-bez-fona-9.png" alt="Mockup" class="mockup-phone" loading="lazy">
+        </div>
+      </div>
+      <div class="col-md-6 order-md-1" data-aos="fade-right">
+        <h2 class="section-title" style="margin-bottom: 32px;">Для пользователя</h2>
+        <ul class="modern-list">
+          <li>Не пропустит концерт любимого исполнителя</li>
+          <li>Откроет для себя новые музыкальные мероприятия</li>
+          <li>Новые, набирающие популярность артисты</li>
+          <li>Запланирует поход на мероприятие заранее</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ РАСКРЫВАЮЩИЙСЯ -->
+  <div class="container-custom section">
+    <h2 class="section-title" data-aos="fade-up">FAQ</h2>
+    <div class="row">
+      <div class="col-lg-10">
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Приложение платное?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Приложение бесплатное, без рекламы и прочих уловок.
+          </div>
+        </div>
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Чем вы отличаетесь от любой другой афиши?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Local Music Party — приложение для всех артистов. Мы не знаем слова “популярность”, никого не выделяем и не продвигаем, поэтому ты можешь узнать полную информацию обо всех музыкальных мероприятиях твоего города.
+          </div>
+        </div>
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Как добавляются мероприятия в приложение?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Ты сам предлагаешь мероприятия через наш сайт. Модераторы проверяют информацию и публикуют.
+          </div>
+        </div>
+        <div class="faq-item" data-aos="fade-up">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Я хочу опубликовать анонс о своем мероприятии, что делать?
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            Нажми кнопку «Добавить мероприятие» выше, заполни форму — модератор свяжется в течение часа.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- СКАЧИВАНИЕ -->
+  <div class="container-custom section">
+    <div class="row justify-content-center text-center">
+      <div class="col-md-8">
+        <h3 style="font-size: 32px; font-weight: 700; margin-bottom: 40px;">Скачивай приложение</h3>
+        <div class="d-flex justify-content-center gap-4 flex-wrap">
+          <a href="#" class="btn-download py-3 px-5" style="border-color: var(--accent-purple);"><i class="fab fa-apple"></i> App Store</a>
+          <a href="#" class="btn-download py-3 px-5" style="border-color: var(--accent-coral);"><i class="fab fa-google-play"></i> Google Play</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ФОРМА ПО ЦЕНТРУ — ПОЛНОСТЬЮ АДАПТИВ -->
+  <div class="container-custom section">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="text-center mb-5">
+          <h3 style="font-size: 32px; font-weight: 700; margin-bottom: 16px;">Остались вопросы?</h3>
+          <p style="color: var(--text-secondary); font-size: 18px;">Напишите нам, мы на связи</p>
+        </div>
+        <form id="feedbackForm" onsubmit="event.preventDefault(); alert('Спасибо! Мы получили ваш вопрос и свяжемся с вами.');">
+  
+          <div class="mb-4">
+            <input type="text" class="form-control-clean" placeholder="Имя" required>
+          </div>
+
+           <div class="mb-4">
+            <input type="email" class="form-control-clean" placeholder="Email или телефон" required>
+           </div>
+
+          <!-- НОВОЕ ПОЛЕ ВОПРОСА -->
+          <div class="mb-4">
+            <textarea 
+              class="form-control-clean" 
+              rows="4" 
+              placeholder="Ваш вопрос..." 
+              required
+              style="resize: none;"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn-solid w-100 py-3">
+            Отправить вопрос
+          </button>
+
+      </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ФУТЕР — СОВРЕМЕННЫЙ, АДАПТИВНЫЙ -->
+  <footer class="footer-modern">
+    <div class="container-custom">
+      <div class="row gy-5">
+        <div class="col-lg-4 col-md-6">
+          <div class="logo mb-4">
+            <div class="logo-icon">♫</div>
+            <div class="logo-text">LOCAL MUSIC PARTY</div>
+          </div>
+          <p style="color: #a0a0b0; font-size: 16px; line-height: 1.6; max-width: 300px;">Музыкальные события рядом. Объединяем артистов и зрителей.</p>
+        </div>
+        <div class="col-lg-2 col-md-6 offset-lg-1">
+          <h6 style="font-size: 18px; font-weight: 600; margin-bottom: 28px; color: white;">Приложение</h6>
+          <ul class="list-unstyled">
+            <li class="mb-3"><a href="#" style="color: #b0b0c0; transition: color 0.2s;">Скачать</a></li>
+            <li class="mb-3"><a href="#" style="color: #b0b0c0; transition: color 0.2s;">Возможности</a></li>
+            <li class="mb-3"><a href="#" style="color: #b0b0c0; transition: color 0.2s;">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h6 style="font-size: 18px; font-weight: 600; margin-bottom: 28px; color: white;">Организаторам</h6>
+          <ul class="list-unstyled">
+            <li class="mb-3"><a href="#" style="color: #b0b0c0; transition: color 0.2s;">Добавить афишу</a></li>
+            <li class="mb-3"><a href="#" style="color: #b0b0c0; transition: color 0.2s;">Правила</a></li>
+            <li class="mb-3"><a href="#" style="color: #b0b0c0; transition: color 0.2s;">Тарифы</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h6 style="font-size: 18px; font-weight: 600; margin-bottom: 28px; color: white;">Социальные сети</h6>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="#" class="social-link" style="font-size: 2rem;"><i class="fab fa-telegram-plane"></i></a>
+            <a href="#" class="social-link" style="font-size: 2rem;"><i class="fab fa-vk"></i></a>
+            <a href="#" class="social-link" style="font-size: 2rem;"><i class="fab fa-tiktok"></i></a>
+          </div>
+          <p style="color: #7a7a8a; margin-top: 36px; font-size: 14px;">© 2025 Local Music Party. Все права защищены.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Инициализация AOS
+    AOS.init({
+      once: true,
+      duration: 600,
+      offset: 30,
+      disable: window.innerWidth < 768 ? true : false // отключаем на мобилках для производительности
+    });
+
+    // Раскрывающийся FAQ
+    window.toggleFaq = function(element) {
+      const answer = element.nextElementSibling;
+      const icon = element.querySelector('i');
+      
+      // Закрываем все другие
+      document.querySelectorAll('.faq-answer').forEach(el => {
+        if (el !== answer && el.classList.contains('show')) {
+          el.classList.remove('show');
+          el.previousElementSibling.querySelector('i').style.transform = 'rotate(0deg)';
+        }
+      });
+
+      answer.classList.toggle('show');
+      icon.style.transform = answer.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0deg)';
+    };
+
+    // Мобильная адаптация
+    window.addEventListener('resize', function() {
+      if (window.innerWidth < 768) {
+        AOS.init({ disable: true });
+      }
+    });
+  </script>
+</body>
+</html>

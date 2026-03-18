@@ -37,20 +37,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Получаем значения полей
       const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim();
+      const phone = document.getElementById('phone').value.trim(); // может быть пустым
       const email = document.getElementById('email').value.trim();
       const question = document.getElementById('question').value.trim();
 
-      // Валидация всех четырёх полей
-      if (!name || !phone || !email || !question) {
-        alert('Пожалуйста, заполните все поля.');
+      // Валидация: имя, email и вопрос обязательны, телефон – нет
+      if (!name || !email || !question) {
+        alert('Пожалуйста, заполните имя, email и вопрос.');
         return;
       }
 
       // Подготовка данных для отправки
       const formData = {
         name: name,
-        phone: phone,
+        phone: phone || '',        // если пользователь ничего не ввёл, отправим пустую строку
         email: email,
         request: question
       };

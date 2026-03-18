@@ -1,4 +1,4 @@
-const express = require("express");
+﻿const express = require("express");
 const mysql = require("mysql2");
 
 const app = express();
@@ -23,6 +23,8 @@ db.connect((err) => {
     }
 });
 
+app.use(express.static('.'));
+
 // GET
 app.get("/", (req, res) => {
     console.log("test");
@@ -33,14 +35,16 @@ app.get("/", (req, res) => {
 app.post("/contact", (req, res) => {
     const { name, email, phone, request } = req.body;
 
-    // Проверяем все четыре обязательных поля
-    if (!name || !email || !phone || !request) {
-        return res.status(400).json({ message: "Заполните все обязательные поля" });
+
+    if (!name || !email || !request) {
+        return res.status(400).json({ message: "Заполните имя, email и вопрос" });
     }
+
+    const phoneValue = phone && phone.trim() !== '' ? phone : null;
 
     const sql = `INSERT INTO requests (name, email, phone, request) VALUES (?, ?, ?, ?)`;
 
-    db.query(sql, [name, email, phone, request], (err, result) => {
+    db.query(sql, [name, email, phoneValue, request], (err, result) => {
         if (err) {
             console.error("Ошибка при вставке в БД:", err);
             return res.status(500).json({ message: "Ошибка сервера" });

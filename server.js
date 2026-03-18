@@ -1,4 +1,4 @@
-﻿const express = require("express");
+const express = require("express");
 const mysql = require("mysql2");
 
 const app = express();
@@ -33,7 +33,8 @@ app.get("/", (req, res) => {
 app.post("/contact", (req, res) => {
     const { name, email, phone, request } = req.body;
 
-    if (!name || !email || !request) {
+    // Проверяем все четыре обязательных поля
+    if (!name || !email || !phone || !request) {
         return res.status(400).json({ message: "Заполните все обязательные поля" });
     }
 

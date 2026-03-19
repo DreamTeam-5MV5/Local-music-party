@@ -27,7 +27,7 @@ window.toggleFaq = function(element) {
   }
 };
 
-// Обработка формы обратной связи
+// Обработка формы обратной связи с EmailJS
 document.addEventListener('DOMContentLoaded', function() {
   const form = document.getElementById('feedbackForm');
   
@@ -37,44 +37,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Получаем значения полей
       const name = document.getElementById('name').value.trim();
-      const phone = document.getElementById('phone').value.trim(); // может быть пустым
+      const phone = document.getElementById('phone').value.trim();
       const email = document.getElementById('email').value.trim();
       const question = document.getElementById('question').value.trim();
 
-      // Валидация: имя, email и вопрос обязательны, телефон – нет
+      // Валидация: имя, email и вопрос обязательны
       if (!name || !email || !question) {
         alert('Пожалуйста, заполните имя, email и вопрос.');
         return;
       }
 
-      // Подготовка данных для отправки
-      const formData = {
+      // Подготовка данных для EmailJS
+      const templateParams = {
         name: name,
-        phone: phone || '',        // если пользователь ничего не ввёл, отправим пустую строку
+        phone: phone || 'не указан',
         email: email,
         request: question
       };
 
       try {
-        const response = await fetch('/contact', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(formData)
+        // Используем emailjs.sendForm или emailjs.send
+        const serviceID = 'service_2quudzn';     
+        const templateID = 'template_ny8s8un';   
+        
+        // Отправка через EmailJS
+        const response = await emailjs.send(serviceID, templateID, templateParams, {
+          publicKey: 'YSgl9KoviO11QTuS1'        
         });
 
-        const result = await response.json();
-
-        if (response.ok) {
-          alert('Спасибо! Мы получили ваш вопрос и свяжемся с вами.');
-          form.reset(); // очищаем форму после успеха
-        } else {
-          alert('Ошибка: ' + (result.message || 'Не удалось отправить форму'));
-        }
+        console.log('Успешно отправлено!', response.status, response.text);
+        alert('Спасибо! Мы получили ваш вопрос и свяжемся с вами.');
+        form.reset(); // очищаем форму
+        
       } catch (error) {
         console.error('Ошибка при отправке:', error);
-        alert('Произошла ошибка при отправке. Попробуйте позже.');
+        alert('Произошла ошибка при отправке. Попробуйте позже или напишите нам в Telegram.');
       }
     });
   }

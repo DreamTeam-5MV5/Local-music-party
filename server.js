@@ -1,13 +1,13 @@
 ﻿const express = require("express");
 const mysql = require("mysql2");
+const cors = require("cors");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
-const cors = require("cors");
 app.use(cors());
-
 app.use(express.json());
+app.use(express.static(__dirname));
 
 // Подключение к MySQL
 const db = mysql.createConnection({
@@ -26,18 +26,14 @@ db.connect((err) => {
     }
 });
 
-app.use(express.static('.'));
-
 // GET
 app.get("/", (req, res) => {
-    console.log("test");
     res.status(200).json("serverRunning");
 });
 
 // POST
 app.post("/contact", (req, res) => {
     const { name, email, phone, request } = req.body;
-
 
     if (!name || !email || !request) {
         return res.status(400).json({ message: "Заполните имя, email и вопрос" });
@@ -58,5 +54,5 @@ app.post("/contact", (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Сервер запущен на http://localhost:${PORT}`);
+    console.log(`Сервер запущен на порту ${PORT}`);
 });

@@ -14,15 +14,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Внешний CSS -->
     <link rel="stylesheet" href="css/style.css">
-	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-	<!-- EmailJS -->
-	<script type="text/javascript">
-	   (function(){
-		  emailjs.init({
-			publicKey: "YSgl9KoviO11QTuS1",
-		  });
-	   })();
-	</script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <!-- EmailJS -->
+    <script type="text/javascript">
+       (function(){
+          emailjs.init({
+            publicKey: "YSgl9KoviO11QTuS1",
+          });
+       })();
+    </script>
 </head>
 <body>
 
@@ -48,13 +48,13 @@
         </nav>
     </div>
 
-    <!-- ХЕРО -->
+    <!-- ХЕРО (id="download-hero") -->
     <div class="container-custom section">
         <div class="row align-items-center g-5">
             <div class="col-lg-6" data-aos="fade-right" data-aos-duration="700">
                 <h1 class="display-headline">Мобильное приложение для поиска локальных мероприятий</h1>
                 <div class="d-flex flex-wrap align-items-center gap-3">
-                    <a href="#" class="btn-solid">Скачать приложение</a>
+                    <a href="#" class="btn-solid" id="download-hero">Скачать приложение</a>
                     <span class="feature-text" style="color: var(--text-secondary);">App Store · Google Play</span>
                 </div>
             </div>
@@ -107,11 +107,11 @@
         </div>
     </div>
 
-    <!-- ДЛЯ ОРГАНИЗАТОРА -->
+    <!-- ДЛЯ ОРГАНИЗАТОРА (id="add-event") — мокап сдвинут влево -->
     <div class="container-custom section">
         <div class="row align-items-center">
-            <div class="col-md-6" data-aos="fade-right">
-                <div class="mockup-wrapper">
+            <div class="col-md-6 text-start" data-aos="fade-right" style="padding-left: 0; overflow: visible;">
+                <div class="mockup-wrapper" style="justify-content: flex-start; margin-left: -15px;">
                     <img src="https://grizly.club/uploads/posts/2023-08/1691415056_grizly-club-p-kartinki-mokap-telefon-bez-fona-9.png" alt="Mockup" class="mockup-phone" loading="lazy">
                 </div>
             </div>
@@ -119,7 +119,7 @@
                 <h2 class="section-title" style="margin-bottom: 24px;">Для организатора</h2>
                 <p style="font-size: 24px; font-weight: 600; color: white; margin-bottom: 24px;">Ты сам предлагаешь мероприятие через наш сайт</p>
                 <p style="color: var(--text-secondary); font-size: 18px; margin-bottom: 32px;">После проверки модератором анонс появится в приложении. Стоимость размещения — <span style="color: white; font-weight: 600;">бесплатна</span>.</p>
-                <a href="#" class="btn-solid" style="background: linear-gradient(145deg, #ff7e5f, #ff6b5c);">Добавить мероприятие</a>
+                <a href="#" class="btn-solid" id="add-event" style="background: linear-gradient(145deg, #ff7e5f, #ff6b5c);">Добавить мероприятие</a>
             </div>
         </div>
     </div>
@@ -202,7 +202,7 @@
         </div>
     </div>
 
-    <!-- ФОРМА ОБРАТНОЙ СВЯЗИ (телефон необязателен) -->
+    <!-- ФОРМА ОБРАТНОЙ СВЯЗИ (с валидацией телефона) -->
     <div class="container-custom section">
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
@@ -214,10 +214,12 @@
                     <div class="mb-4">
                         <input type="text" class="form-control-clean" id="name" placeholder="Имя" required>
                     </div>
-                    <div class="mb-4">
-                        <!-- Поле телефон больше не обязательно -->
-                        <input type="tel" class="form-control-clean" id="phone" placeholder="Телефон (необязательно)">
-                    </div>
+					<div class="mb-4">
+						<input type="tel" class="form-control-clean" id="phone" placeholder="Телефон" maxlength="16">
+						<div class="invalid-feedback" id="phoneError" style="display: none; color: #ff8a7a; font-size: 14px; margin-top: 8px;">
+							Введите номер в формате +7 123 456-78-90
+						</div>
+					</div>
                     <div class="mb-4">
                         <input type="email" class="form-control-clean" id="email" placeholder="Email" required>
                     </div>

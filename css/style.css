@@ -20,6 +20,20 @@
   }
 }
 
+/* Дополнительная адаптация для очень больших экранов */
+@media (min-width: 2000px) {
+  :root {
+    --container-padding: 40px;
+    --spacing-section: 140px;
+  }
+  body {
+    font-size: 18px;
+  }
+  .container-custom {
+    max-width: 1800px;
+  }
+}
+
 body {
   background: var(--bg-gradient);
   color: var(--text-primary);
@@ -30,7 +44,7 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* ===== МОДУЛЬНАЯ СЕТКА 1360px ===== */
+/* ===== МОДУЛЬНАЯ СЕТКА ===== */
 .container-custom {
   max-width: 1360px;
   margin: 0 auto;
@@ -79,7 +93,7 @@ body {
   }
 }
 
-/* ===== СОЦСЕТИ — БОЛЬШИЕ ===== */
+/* ===== СОЦСЕТИ ===== */
 .social-link {
   color: #b0b0c0;
   margin: 0 10px;
@@ -212,7 +226,7 @@ body {
   }
 }
 
-/* ===== СЕТКА ПРЕИМУЩЕСТВ ===== */
+/* ===== СЕТКА ПРЕИМУЩЕСТВ (убрана подложка) ===== */
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -226,9 +240,6 @@ body {
   }
 }
 .feature-card {
-  background: rgba(18, 18, 24, 0.3);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
   border-bottom: 1px solid var(--border-subtle);
   padding-bottom: 24px;
 }
@@ -258,7 +269,7 @@ body {
   }
 }
 
-/* ===== РАСКРЫВАЮЩИЙСЯ FAQ ===== */
+/* ===== FAQ ===== */
 .faq-item {
   border-bottom: 1px solid var(--border-subtle);
   padding: 28px 0;
@@ -296,7 +307,7 @@ body {
   }
 }
 
-/* ===== ФОРМА ПО ЦЕНТРУ ===== */
+/* ===== ФОРМА ===== */
 .form-control-clean {
   background: rgba(22, 22, 28, 0.7);
   backdrop-filter: blur(10px);
@@ -355,4 +366,27 @@ a {
   .navbar-brand {
     width: 100%;
   }
+}
+
+/* ===== АНИМАЦИЯ ТРЯСКИ (диагональная) ===== */
+.shake {
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+@keyframes shake {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-5px, -5px); }
+    40% { transform: translate(5px, 5px); }
+    60% { transform: translate(-3px, -3px); }
+    80% { transform: translate(3px, 3px); }
+    100% { transform: translate(0, 0); }
+}
+
+.invalid-feedback {
+    font-size: 14px;
+    color: var(--accent-coral);
+    margin-top: 8px;
+}
+.form-control-clean.is-invalid {
+    border-color: var(--accent-coral);
 }

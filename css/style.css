@@ -390,3 +390,86 @@ a {
 .form-control-clean.is-invalid {
     border-color: var(--accent-coral);
 }
+
+/* ===== ИЗОБРАЖЕНИЕ ЛОГОТИПА ===== */
+.logo-img {
+  max-width: 220px;
+  height: auto;
+  display: block;
+}
+
+/* ===== ИЗОБРАЖЕНИЯ В БЛОКЕ "ЧТО ВНУТРИ" ===== */
+.feature-img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+  object-fit: cover;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== БЛОК ДОСТАВКИ (+10%) ===== */
+.delivery-section {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 100%;
+  padding: 100px 0;
+  position: relative;
+}
+.delivery-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.4); /* Легкое затемнение для читаемости текста */
+  z-index: 1;
+}
+.delivery-section .container-custom {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== НОВЫЙ СПИСОК "ДЛЯ ПОЛЬЗОВАТЕЛЯ" ===== */
+.user-feature-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.user-feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 24px 32px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius);
+  font-size: 18px;
+  color: white;
+  font-weight: 500;
+  background: rgba(22, 22, 28, 0.4);
+  transition: border-color 0.3s ease;
+}
+.user-feature-list li:hover {
+  border-color: rgba(167, 139, 250, 0.4); /* Легкая подсветка при наведении */
+}
+.user-feature-list li i {
+  font-size: 24px;
+  color: white;
+  width: 30px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .delivery-section {
+    padding: 60px 0;
+  }
+  .user-feature-list li {
+    padding: 16px 20px;
+    font-size: 16px;
+  }
+  .logo-img {
+    max-width: 180px;
+  }
+}

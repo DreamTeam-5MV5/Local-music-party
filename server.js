@@ -16,15 +16,17 @@ app.use(express.static(__dirname));
 
 // pool
 const db = mysql.createPool({
-    host: process.env.MYSQLHOST || "mysql",  // ← короткое имя!
+    host: process.env.MYSQLHOST || "crossover.proxy.rlwy.net",
     user: process.env.MYSQLUSER || "root",
     password: process.env.MYSQLPASSWORD,
     database: process.env.MYSQLDATABASE || "railway",
-    port: parseInt(process.env.MYSQLPORT) || 3306,  // ← 3306!
+    port: parseInt(process.env.MYSQLPORT) || 31468,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-    connectTimeout: 30000
+    connectTimeout: 60000,      // 60 секунд!
+    enableKeepAlive: true,
+    ssl: false
 });
 
 // Проверка подключения

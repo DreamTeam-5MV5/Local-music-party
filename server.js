@@ -16,7 +16,7 @@ app.use(express.static(__dirname));
 
 // pool
 const db = mysql.createPool({
-    host: process.env.MYSQLHOST || "myqsl",
+    host: process.env.MYSQLHOST || "mysql.railway.internal",
     user: process.env.MYSQLUSER || "root",
     password: process.env.MYSQLPASSWORD,
     database: process.env.MYSQLDATABASE || "railway",

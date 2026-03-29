@@ -16,11 +16,11 @@ app.use(express.static(__dirname));
 
 // pool
 const db = mysql.createPool({
-    host: "crossover.proxy.rlwy.net",
-    user: "root",
-    password: "FsAdXAdsNwvwoaarvcZBzPzsqHBprIKO",
-    database: "railway",
-    port: 3306,
+    host: process.env.MYSQLHOST || "mysql.railway.internal",
+    user: process.env.MYSQLUSER || "root",
+    password: process.env.MYSQLPASSWORD || "FsAdXAdsNwvwoaarvcZBzPzsqHBprIKO",
+    database: process.env.MYSQLDATABASE || "railway",
+    port: parseInt(process.env.MYSQLPORT) || 3306,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -98,4 +98,20 @@ process.on('SIGTERM', () => {
 process.on('SIGINT', () => {
     console.log('🛑 SIGINT received, shutting down...');
     process.exit(0);
+});
+
+// Проверка подключения
+db.getConnection((err, connection) => {
+    if (err) {
+        console.error("❌ Ошибка подключения к БД:", err);
+        console.error("Host:", process.env.MYSQLHOST);
+        console.error("User:", process.env.MYSQLUSER);
+        console.error("Database:", process.env.MYSQLDATABASE);
+        console.error("Port:", process.env.MYSQLPORT);
+    } else {
+        console.log("✅ MySQL подключена к Railway");
+        console.log("📍 Host:", process.env.MYSQLHOST);
+        console.log("📍 Database:", process.env.MYSQLDATABASE);
+        connection.release();
+    }
 });

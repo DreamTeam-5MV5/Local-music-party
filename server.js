@@ -1,3 +1,7 @@
+console.log("🚀 ПРИЛОЖЕНИЕ НАЧИНАЕТ ЗАПУСК...");
+console.log("Node version:", process.version);
+console.log("PORT from env:", process.env.PORT);
+
 const express = require("express");
 const mysql = require("mysql2");
 const cors = require("cors");

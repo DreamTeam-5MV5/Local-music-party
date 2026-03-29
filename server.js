@@ -16,16 +16,14 @@ app.use(express.static(__dirname));
 
 // pool
 const db = mysql.createPool({
-    host: process.env.MYSQLHOST || "mysql.railway.internal",  // ← внутренний адрес
+    host: process.env.MYSQLHOST || "crossover.proxy.rlwy.net",
     user: process.env.MYSQLUSER || "root",
-    password: process.env.MYSQLPASSWORD,
+    password: process.env.MYSQLPASSWORD || "FsAdXAdsNwvwoaarvcZBzPzsqHBprIKO",
     database: process.env.MYSQLDATABASE || "railway",
-    port: parseInt(process.env.MYSQLPORT) || 3306,  // ← внутренний порт
+    port: parseInt(process.env.MYSQLPORT) || 31468,
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0,
-    connectTimeout: 10000,  // 10 секунд
-    timeout: 10000
+    queueLimit: 0
 });
 
 // Проверка подключения

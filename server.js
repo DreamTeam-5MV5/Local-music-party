@@ -44,6 +44,32 @@ app.get("/", (req, res) => {
     res.status(200).send("OK");
 });
 
+// API: Получить список FAQ
+app.get("/api/faqs", (req, res) => {
+    const sql = `
+        SELECT id, question, answer 
+        FROM faqs 
+        WHERE is_active = TRUE 
+        ORDER BY sort_order ASC, id ASC
+    `;
+    
+    db.query(sql, (err, results) => {
+        if (err) {
+            console.error("❌ Ошибка получения FAQ:", err);
+            return res.status(500).json({ 
+                message: "Ошибка сервера",
+                error: process.env.NODE_ENV === 'development' ? err.message : undefined
+            });
+        }
+        
+        console.log(`✅ Получено ${results.length} вопросов FAQ`);
+        res.status(200).json({ 
+            success: true, 
+            data: results 
+        });
+    });
+});
+
 // API
 app.post("/contact", (req, res) => {
     const { name, email, phone, request } = req.body;

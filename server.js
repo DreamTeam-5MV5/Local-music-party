@@ -16,39 +16,15 @@ app.use(express.static(__dirname));
 
 // pool
 const db = mysql.createPool({
-    host: process.env.MYSQLHOST,
-    user: process.env.MYSQLUSER,
+    host: process.env.MYSQLHOST || "mysql",  // ← короткое имя!
+    user: process.env.MYSQLUSER || "root",
     password: process.env.MYSQLPASSWORD,
-    database: process.env.MYSQLDATABASE,
-    port: parseInt(process.env.MYSQLPORT),
+    database: process.env.MYSQLDATABASE || "railway",
+    port: parseInt(process.env.MYSQLPORT) || 3306,  // ← 3306!
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-    connectTimeout: 30000,      // 30 секунд
-    enableKeepAlive: true
-});
-
-// Проверка подключения
-function testConnection() {
-    db.getConnection((err, connection) => {
-        if (err) {
-            console.error("❌ БД не подключена:", err.message);
-            console.error("🔍 Проверяем переменные:");
-            console.error("   HOST:", process.env.MYSQLHOST);
-            console.error("   PORT:", process.env.MYSQLPORT);
-            console.error("   DB:", process.env.MYSQLDATABASE);
-        } else {
-            console.log("✅ MySQL подключена!");
-            connection.release();
-        }
-    });
-}
-
-// === Запуск ===
-app.listen(PORT, "0.0.0.0", () => {
-    console.log(`✅ Сервер на порту ${PORT}`);
-    // Пробуем подключиться через 5 секунд (даём сети время)
-    setTimeout(testConnection, 5000);
+    connectTimeout: 30000
 });
 
 // Проверка подключения

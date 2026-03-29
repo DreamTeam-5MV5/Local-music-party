@@ -16,11 +16,11 @@ app.use(express.static(__dirname));
 
 // pool
 const db = mysql.createPool({
-    host: process.env.MYSQLHOST || "mysql.railway.internal",
+    host: process.env.MYSQLHOST || "crossover.proxy.rlwy.net",
     user: process.env.MYSQLUSER || "root",
     password: process.env.MYSQLPASSWORD || "FsAdXAdsNwvwoaarvcZBzPzsqHBprIKO",
     database: process.env.MYSQLDATABASE || "railway",
-    port: parseInt(process.env.MYSQLPORT) || 3306,
+    port: parseInt(process.env.MYSQLPORT) || 31468,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0

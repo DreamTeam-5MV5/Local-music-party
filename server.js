@@ -85,3 +85,17 @@ process.on("unhandledRejection", (err) => {
 app.listen(PORT, "0.0.0.0", () => {
     console.log(`Сервер запущен на порту ${PORT}`);
 });
+
+setInterval(() => {
+    console.log(` Сервер жив, uptime: ${Math.floor(process.uptime())}s`);
+}, 30000); // каждые 30 секунд
+
+process.on('SIGTERM', () => {
+    console.log(' SIGTERM received, shutting down...');
+    process.exit(0);
+});
+
+process.on('SIGINT', () => {
+    console.log('🛑 SIGINT received, shutting down...');
+    process.exit(0);
+});

@@ -16,17 +16,39 @@ app.use(express.static(__dirname));
 
 // pool
 const db = mysql.createPool({
-    host: process.env.MYSQLHOST || "crossover.proxy.rlwy.net",
-    user: process.env.MYSQLUSER || "root",
+    host: process.env.MYSQLHOST,
+    user: process.env.MYSQLUSER,
     password: process.env.MYSQLPASSWORD,
-    database: process.env.MYSQLDATABASE || "railway",
-    port: parseInt(process.env.MYSQLPORT) || 31468,
+    database: process.env.MYSQLDATABASE,
+    port: parseInt(process.env.MYSQLPORT),
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0,
-    connectTimeout: 20000,      // 20 секунд на подключение
-    enableKeepAlive: true,      // держать соединение живым
-    keepAliveInitialDelay: 0    // сразу начинать keepalive
+    connectTimeout: 30000,      // 30 секунд
+    enableKeepAlive: true
+});
+
+// Проверка подключения
+function testConnection() {
+    db.getConnection((err, connection) => {
+        if (err) {
+            console.error("❌ БД не подключена:", err.message);
+            console.error("🔍 Проверяем переменные:");
+            console.error("   HOST:", process.env.MYSQLHOST);
+            console.error("   PORT:", process.env.MYSQLPORT);
+            console.error("   DB:", process.env.MYSQLDATABASE);
+        } else {
+            console.log("✅ MySQL подключена!");
+            connection.release();
+        }
+    });
+}
+
+// === Запуск ===
+app.listen(PORT, "0.0.0.0", () => {
+    console.log(`✅ Сервер на порту ${PORT}`);
+    // Пробуем подключиться через 5 секунд (даём сети время)
+    setTimeout(testConnection, 5000);
 });
 
 // Проверка подключения

@@ -18,12 +18,15 @@ app.use(express.static(__dirname));
 const db = mysql.createPool({
     host: process.env.MYSQLHOST || "crossover.proxy.rlwy.net",
     user: process.env.MYSQLUSER || "root",
-    password: process.env.MYSQLPASSWORD || "FsAdXAdsNwvwoaarvcZBzPzsqHBprIKO",
+    password: process.env.MYSQLPASSWORD,
     database: process.env.MYSQLDATABASE || "railway",
     port: parseInt(process.env.MYSQLPORT) || 31468,
     waitForConnections: true,
     connectionLimit: 10,
-    queueLimit: 0
+    queueLimit: 0,
+    connectTimeout: 20000,      // 20 секунд на подключение
+    enableKeepAlive: true,      // держать соединение живым
+    keepAliveInitialDelay: 0    // сразу начинать keepalive
 });
 
 // Проверка подключения

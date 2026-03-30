@@ -43,7 +43,8 @@ async function loadFaqs() {
     console.error('❌ Контейнер #faq-container не найден');
     return;
   }
-
+  // Показываем индикатор загрузки
+  container.innerHTML = '<p class="text-center" style="color: var(--text-secondary);">Загрузка вопросов...</p>';
   // Полный URL для Railway
   const apiUrl = 'https://local-music-party-production.up.railway.app/api/faqs';
 

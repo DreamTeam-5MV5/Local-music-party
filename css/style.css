@@ -483,7 +483,7 @@ a {
     gap: 10px;
 }
 
-/* Веб версия (десктоп) */
+/* Веб версия (десктоп) - кнопки в ряд */
 @media (min-width: 769px) {
     .store-btn {
         padding: 12px 28px !important;
@@ -492,17 +492,27 @@ a {
     .store-btn i {
         font-size: 18px;
     }
+    .d-flex.justify-content-center.gap-4 {
+        flex-direction: row !important;
+    }
 }
 
-/* Мобильная версия */
+/* Мобильная версия - кнопки друг под другом */
 @media (max-width: 768px) {
     .store-btn {
         padding: 12px 24px !important;
         font-size: 14px !important;
-        min-width: 160px;
+        min-width: 200px;
+        width: 100%;
+        max-width: 250px;
     }
     .store-btn i {
         font-size: 16px;
+    }
+    .d-flex.justify-content-center.gap-4 {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 16px !important;
     }
 }
 
@@ -511,7 +521,8 @@ a {
     .store-btn {
         padding: 10px 20px !important;
         font-size: 13px !important;
-        min-width: 140px;
+        min-width: 180px;
+        max-width: 220px;
     }
     .store-btn i {
         font-size: 14px;
